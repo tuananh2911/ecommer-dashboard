@@ -15,7 +15,7 @@ const AllProducts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllProductsShop(seller._id));
+    dispatch(getAllProductsShop(seller.id));
   }, [dispatch]);
 
   const handleDelete = (id) => {
@@ -38,10 +38,10 @@ const AllProducts = () => {
       flex: 0.6,
     },
     {
-      field: "Stock",
-      headerName: "Stock",
+      field: "quantity",
+      headerName: "Quantity",
       type: "number",
-      minWidth: 80,
+      minWidth: 130,
       flex: 0.5,
     },
 
@@ -93,15 +93,16 @@ const AllProducts = () => {
   const row = [];
 
   products &&
-    products.forEach((item) => {
-      row.push({
-        id: item._id,
-        name: item.name,
-        price: "US$ " + item.discountPrice,
-        Stock: item.stock,
-        sold: item?.sold_out,
-      });
+  products.forEach((item) => {
+    row.push({
+      id: item.id,
+      name: item.name,
+      price: item.price + "đ", // Using the correct price field
+      quantity: item.quantity,
+      sold: item.soldOut, // Ensure to use 'soldOut' as per your JSON structure
     });
+  });
+
 
   return (
     <>

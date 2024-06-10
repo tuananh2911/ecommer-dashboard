@@ -1,14 +1,14 @@
 import axios from "axios";
 import { server } from "../../server";
-
+const localhost = 'http://localhost:5000/api';
 // load user
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({
       type: "LoadUserRequest",
     });
-    const { data } = await axios.get(`${server}/user/getuser`, {
-      withCredentials: true,
+    const { data } = await axios.get(`${localhost}/customers`, {
+      withCredentials: false,
     });
     dispatch({
       type: "LoadUserSuccess",
@@ -23,17 +23,17 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // load seller
-export const loadSeller = () => async (dispatch) => {
+export const loadSeller = (email) => async (dispatch) => {
   try {
     dispatch({
       type: "LoadSellerRequest",
     });
-    const { data } = await axios.get(`${server}/shop/getSeller`, {
-      withCredentials: true,
+    const { data } = await axios.get(`${localhost}/vendor/${email}`, {
+      withCredentials: false,
     });
     dispatch({
       type: "LoadSellerSuccess",
-      payload: data.seller,
+      payload: data,
     });
   } catch (error) {
     dispatch({

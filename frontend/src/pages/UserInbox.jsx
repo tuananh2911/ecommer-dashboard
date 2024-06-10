@@ -11,7 +11,7 @@ import { TfiGallery } from "react-icons/tfi";
 import styles from "../styles/styles";
 const ENDPOINT = "ws://localhost:4000";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
-
+const localhost = 'http://localhost:5000/api';
 const UserInbox = () => {
   const { user,loading } = useSelector((state) => state.user);
   const [conversations, setConversations] = useState([]);
@@ -278,7 +278,7 @@ const MessageList = ({
     const userId = data.members.find((user) => user !== me);
     const getUser = async () => {
       try {
-        const res = await axios.get(`${server}/shop/get-shop-info/${userId}`);
+        const res = await axios.get(`${localhost}/vendor/${userId}`);
         setUser(res.data.shop);
       } catch (error) {
         console.log(error);
@@ -302,7 +302,7 @@ const MessageList = ({
     >
       <div className="relative">
         <img
-          src={`${user?.avatar?.url}`}
+          src={`${user?.avatar}`}
           alt=""
           className="w-[50px] h-[50px] rounded-full"
         />
@@ -343,7 +343,7 @@ const SellerInbox = ({
       <div className="w-full flex p-3 items-center justify-between bg-slate-200">
         <div className="flex">
           <img
-            src={`${userData?.avatar?.url}`}
+            src={`${userData?.avatar}`}
             alt=""
             className="w-[60px] h-[60px] rounded-full"
           />
@@ -371,7 +371,7 @@ const SellerInbox = ({
             >
               {item.sender !== sellerId && (
                 <img
-                  src={`${userData?.avatar?.url}`}
+                  src={`${userData?.avatar}`}
                   className="w-[40px] h-[40px] rounded-full mr-3"
                   alt=""
                 />

@@ -19,6 +19,17 @@ export const productReducer = createReducer(initialState, {
     state.success = false;
   },
 
+  // get categories
+  getAllCategoriesRequest: (state) => {state.isLoading = true},
+  getAllCategoriesSuccess: (state,action) => {
+    state.isLoading = false;
+    state.categories = action.payload;
+  },
+  getAllCategoriesFailed:(state,action)=>{
+    state.isLoading = false;
+    state.error = action.payload;
+  },
+
   // get all products of shop
   getAllProductsShopRequest: (state) => {
     state.isLoading = true;

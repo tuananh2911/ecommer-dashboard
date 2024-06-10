@@ -13,14 +13,14 @@ const DashboardHeader = () => {
       <div>
         <Link to="/dashboard">
           <img
-            src="https://shopo.quomodothemes.website/assets/images/logo.svg"
+            src="https://themepanthers.com/wp/nest/d1/wp-content/uploads/2022/02/logo.png"
             alt=""
           />
         </Link>
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
-          <Link to="/dashboard/cupouns" className="800px:block hidden">
+          <Link to="/dashboard-coupons" className="800px:block hidden">
             <AiOutlineGift
               color="#555"
               size={30}
@@ -51,9 +51,9 @@ const DashboardHeader = () => {
               className="mx-5 cursor-pointer"
             />
           </Link>
-          <Link to={`/shop/${seller._id}`}>
+          <Link to={`/shop/${seller.id}`}>
             <img
-              src={`${seller.avatar?.url}`}
+              src={`${seller.avatar}`}
               alt=""
               className="w-[50px] h-[50px] rounded-full object-cover"
             />

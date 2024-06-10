@@ -8,13 +8,13 @@ import { getAllOrdersOfShop } from "../../redux/actions/order";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 const AllRefundOrders = () => {
-  const { orders, isLoading } = useSelector((state) => state.order);
+  const { orders, isLoading } = useSelector((state) => state.orders);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllOrdersOfShop(seller._id));
+    dispatch(getAllOrdersOfShop(seller.id));
   }, [dispatch]);
 
   const refundOrders = orders && orders.filter((item) => item.status === "Processing refund"  || item.status === "Refund Success");

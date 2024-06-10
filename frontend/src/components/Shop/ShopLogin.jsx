@@ -5,33 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
+import {useSelector} from "react-redux";
+import {loginSeller} from "../../redux/actions/login";
+import Store from "../../redux/store";
+import {getAllOrdersOfShop} from "../../redux/actions/order";
 
+const localhost = 'http://localhost:5000/api';
 const ShopLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-
+  const { isSeller,isLoading } = useSelector((state) => state.seller);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await axios
-      .post(
-        `${server}/shop/login-shop`,
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        toast.success("Login Success!");
-        navigate("/dashboard");
-        window.location.reload(true); 
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
+    console.log('login')
+    await Store.dispatch(loginSeller({email, password}))
   };
 
   return (

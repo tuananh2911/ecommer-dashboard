@@ -84,7 +84,7 @@ const ProfileContent = ({ active }) => {
           <div className="flex justify-center w-full">
             <div className="relative">
               <img
-                src={`${user?.avatar?.url}`}
+                src={`${user?.avatar}`}
                 className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
                 alt=""
               />
@@ -202,7 +202,7 @@ const ProfileContent = ({ active }) => {
 
 const AllOrders = () => {
   const { user } = useSelector((state) => state.user);
-  const { orders } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -287,7 +287,7 @@ const AllOrders = () => {
 
 const AllRefundOrders = () => {
   const { user } = useSelector((state) => state.user);
-  const { orders } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -375,7 +375,7 @@ const AllRefundOrders = () => {
 
 const TrackOrder = () => {
   const { user } = useSelector((state) => state.user);
-  const { orders } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
 
   useEffect(() => {

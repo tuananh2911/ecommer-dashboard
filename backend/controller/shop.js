@@ -145,7 +145,7 @@ router.get(
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const seller = await Shop.findById(req.seller._id);
+      const seller = await Shop.findById(req.seller.id);
 
       if (!seller) {
         return next(new ErrorHandler("User doesn't exists", 400));
@@ -204,7 +204,7 @@ router.put(
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      let existsSeller = await Shop.findById(req.seller._id);
+      let existsSeller = await Shop.findById(req.seller.id);
 
         const imageId = existsSeller.avatar.public_id;
 
@@ -241,7 +241,7 @@ router.put(
     try {
       const { name, description, address, phoneNumber, zipCode } = req.body;
 
-      const shop = await Shop.findOne(req.seller._id);
+      const shop = await Shop.findOne(req.seller.id);
 
       if (!shop) {
         return next(new ErrorHandler("User not found", 400));
@@ -320,7 +320,7 @@ router.put(
     try {
       const { withdrawMethod } = req.body;
 
-      const seller = await Shop.findByIdAndUpdate(req.seller._id, {
+      const seller = await Shop.findByIdAndUpdate(req.seller.id, {
         withdrawMethod,
       });
 
@@ -340,7 +340,7 @@ router.delete(
   isSeller,
   catchAsyncErrors(async (req, res, next) => {
     try {
-      const seller = await Shop.findById(req.seller._id);
+      const seller = await Shop.findById(req.seller.id);
 
       if (!seller) {
         return next(new ErrorHandler("Seller not found with this id", 400));

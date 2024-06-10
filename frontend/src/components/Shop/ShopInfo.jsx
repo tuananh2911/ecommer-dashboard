@@ -6,7 +6,7 @@ import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsShop } from "../../redux/actions/product";
-
+const localhost = 'http://localhost:5000/api';
 const ShopInfo = ({ isOwner }) => {
   const [data,setData] = useState({});
   const {products} = useSelector((state) => state.products);
@@ -17,8 +17,8 @@ const ShopInfo = ({ isOwner }) => {
   useEffect(() => {
     dispatch(getAllProductsShop(id));
     setIsLoading(true);
-    axios.get(`${server}/shop/get-shop-info/${id}`).then((res) => {
-     setData(res.data.shop);
+    axios.get(`${localhost}/vendor/${id}`).then((res) => {
+     setData(res.data);
      setIsLoading(false);
     }).catch((error) => {
       console.log(error);
@@ -52,7 +52,7 @@ const ShopInfo = ({ isOwner }) => {
       <div className="w-full py-5">
         <div className="w-full flex item-center justify-center">
           <img
-            src={`${data.avatar?.url}`}
+            src={`${data.avatar}`}
             alt=""
             className="w-[150px] h-[150px] object-cover rounded-full"
           />

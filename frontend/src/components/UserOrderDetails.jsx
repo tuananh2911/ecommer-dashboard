@@ -11,7 +11,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const UserOrderDetails = () => {
-  const { orders } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.orders);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);

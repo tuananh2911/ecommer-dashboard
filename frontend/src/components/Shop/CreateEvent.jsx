@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { categoriesData } from "../../static/data";
 import { toast } from "react-toastify";
 import { createevent } from "../../redux/actions/event";
 
 const CreateEvent = () => {
   const { seller } = useSelector((state) => state.seller);
   const { success, error } = useSelector((state) => state.events);
+  const { categories } = useSelector((state) => state.categories);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -92,7 +92,7 @@ const CreateEvent = () => {
       discountPrice,
       stock,
       images,
-      shopId: seller._id,
+      shopId: seller.id,
       start_Date: startDate?.toISOString(),
       Finish_Date: endDate?.toISOString(),
     };
@@ -146,10 +146,10 @@ const CreateEvent = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="Choose a category">Choose a category</option>
-            {categoriesData &&
-              categoriesData.map((i) => (
-                <option value={i.title} key={i.title}>
-                  {i.title}
+            {categories &&
+              categories.map((i) => (
+                <option value={i.name} key={i.name}>
+                  {i.name}
                 </option>
               ))}
           </select>

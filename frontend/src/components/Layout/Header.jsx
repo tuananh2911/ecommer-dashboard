@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/styles";
-import { categoriesData, productData } from "../../static/data";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
@@ -30,7 +29,7 @@ const Header = ({ activeHeading }) => {
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const { categories } = useSelector((state) => state.categories);
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
@@ -131,7 +130,7 @@ const Header = ({ activeHeading }) => {
               />
               {dropDown ? (
                 <DropDown
-                  categoriesData={categoriesData}
+                  categories={categories}
                   setDropDown={setDropDown}
                 />
               ) : null}
@@ -175,7 +174,7 @@ const Header = ({ activeHeading }) => {
                 {isAuthenticated ? (
                   <Link to="/profile">
                     <img
-                      src={`${user?.avatar?.url}`}
+                      src={`${user?.avatar}`}
                       className="w-[35px] h-[35px] rounded-full"
                       alt=""
                     />
@@ -314,7 +313,7 @@ const Header = ({ activeHeading }) => {
                   <div>
                     <Link to="/profile">
                       <img
-                        src={`${user.avatar?.url}`}
+                        src={`${user.avatar}`}
                         alt=""
                         className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]"
                       />

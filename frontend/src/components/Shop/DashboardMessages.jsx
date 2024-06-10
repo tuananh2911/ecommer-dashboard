@@ -97,17 +97,17 @@ const DashboardMessages = () => {
     e.preventDefault();
 
     const message = {
-      sender: seller._id,
+      sender: seller.id,
       text: newMessage,
       conversationId: currentChat._id,
     };
 
     const receiverId = currentChat.members.find(
-      (member) => member.id !== seller._id
+      (member) => member.id !== seller.id
     );
 
     socketId.emit("sendMessage", {
-      senderId: seller._id,
+      senderId: seller.id,
       receiverId,
       text: newMessage,
     });
@@ -132,13 +132,13 @@ const DashboardMessages = () => {
   const updateLastMessage = async () => {
     socketId.emit("updateLastMessage", {
       lastMessage: newMessage,
-      lastMessageId: seller._id,
+      lastMessageId: seller.id,
     });
 
     await axios
       .put(`${server}/conversation/update-last-message/${currentChat._id}`, {
         lastMessage: newMessage,
-        lastMessageId: seller._id,
+        lastMessageId: seller.id,
       })
       .then((res) => {
         console.log(res.data.conversation);
@@ -164,11 +164,11 @@ const DashboardMessages = () => {
 
   const imageSendingHandler = async (e) => {
     const receiverId = currentChat.members.find(
-      (member) => member !== seller._id
+      (member) => member !== seller.id
     );
 
     socketId.emit("sendMessage", {
-      senderId: seller._id,
+      senderId: seller.id,
       receiverId,
       images: e,
     });
@@ -177,7 +177,7 @@ const DashboardMessages = () => {
       await axios
         .post(`${server}/message/create-new-message`, {
           images: e,
-          sender: seller._id,
+          sender: seller.id,
           text: newMessage,
           conversationId: currentChat._id,
         })
@@ -196,7 +196,7 @@ const DashboardMessages = () => {
       `${server}/conversation/update-last-message/${currentChat._id}`,
       {
         lastMessage: "Photo",
-        lastMessageId: seller._id,
+        lastMessageId: seller.id,
       }
     );
   };
@@ -221,7 +221,7 @@ const DashboardMessages = () => {
                 index={index}
                 setOpen={setOpen}
                 setCurrentChat={setCurrentChat}
-                me={seller._id}
+                me={seller.id}
                 setUserData={setUserData}
                 userData={userData}
                 online={onlineCheck(item)}
@@ -239,7 +239,7 @@ const DashboardMessages = () => {
           setNewMessage={setNewMessage}
           sendMessageHandler={sendMessageHandler}
           messages={messages}
-          sellerId={seller._id}
+          sellerId={seller.id}
           userData={userData}
           activeStatus={activeStatus}
           scrollRef={scrollRef}
@@ -300,7 +300,7 @@ const MessageList = ({
     >
       <div className="relative">
         <img
-          src={`${user?.avatar?.url}`}
+          src={`${user?.avatar}`}
           alt=""
           className="w-[50px] h-[50px] rounded-full"
         />
@@ -341,7 +341,7 @@ const SellerInbox = ({
       <div className="w-full flex p-3 items-center justify-between bg-slate-200">
         <div className="flex">
           <img
-            src={`${userData?.avatar?.url}`}
+            src={`${userData?.avatar}`}
             alt=""
             className="w-[60px] h-[60px] rounded-full"
           />
@@ -370,7 +370,7 @@ const SellerInbox = ({
               >
                 {item.sender !== sellerId && (
                   <img
-                    src={`${userData?.avatar?.url}`}
+                    src={`${userData?.avatar}`}
                     className="w-[40px] h-[40px] rounded-full mr-3"
                     alt=""
                   />

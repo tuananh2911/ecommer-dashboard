@@ -21,7 +21,7 @@ const AdminHeader = () => {
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
-          <Link to="/dashboard/cupouns" className="800px:block hidden">
+          <Link to="/dashboard-coupons" className="800px:block hidden">
             <AiOutlineGift
               color="#555"
               size={30}
@@ -53,7 +53,7 @@ const AdminHeader = () => {
             />
           </Link>
             <img
-              src={`${user?.avatar?.url}`}
+              src={`${user?.avatar}`}
               alt=""
               className="w-[50px] h-[50px] rounded-full object-cover"
             />

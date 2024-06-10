@@ -1,40 +1,23 @@
 import axios from "axios";
 import { server } from "../../server";
-
+const localhost = 'http://localhost:5000/api';
 // create product
 export const createProduct =
   (
-    name,
-    description,
-    category,
-    tags,
-    originalPrice,
-    discountPrice,
-    stock,
-    shopId,
-    images
+    newData
   ) =>
   async (dispatch) => {
     try {
       dispatch({
         type: "productCreateRequest",
       });
-
       const { data } = await axios.post(
-        `${server}/product/create-product`,
-        name,
-        description,
-        category,
-        tags,
-        originalPrice,
-        discountPrice,
-        stock,
-        shopId,
-        images,
+        `${localhost}/products`,
+          newData
       );
       dispatch({
         type: "productCreateSuccess",
-        payload: data.product,
+        payload: data,
       });
     } catch (error) {
       dispatch({
@@ -52,16 +35,16 @@ export const getAllProductsShop = (id) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `${server}/product/get-all-products-shop/${id}`
+      `${localhost}/products?vendorId=${id}`
     );
     dispatch({
       type: "getAllProductsShopSuccess",
-      payload: data.products,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: "getAllProductsShopFailed",
-      payload: error.response.data.message,
+      payload: error,
     });
   }
 };
@@ -93,21 +76,21 @@ export const deleteProduct = (id) => async (dispatch) => {
 };
 
 // get all products
-export const getAllProducts = () => async (dispatch) => {
+export const getAllProducts = (id) => async (dispatch) => {
   try {
     dispatch({
       type: "getAllProductsRequest",
     });
 
-    const { data } = await axios.get(`${server}/product/get-all-products`);
+    const { data } = await axios.get(`${localhost}/products?vendorId=${id}`);
     dispatch({
       type: "getAllProductsSuccess",
-      payload: data.products,
+      payload: data,
     });
   } catch (error) {
     dispatch({
       type: "getAllProductsFailed",
-      payload: error.response.data.message,
+      payload: error.response.data,
     });
   }
 };

@@ -35,7 +35,7 @@ router.post(
 
       const withdraw = await Withdraw.create(data);
 
-      const shop = await Shop.findById(req.seller._id);
+      const shop = await Shop.findById(req.seller.id);
 
       shop.availableBalance = shop.availableBalance - amount;
 

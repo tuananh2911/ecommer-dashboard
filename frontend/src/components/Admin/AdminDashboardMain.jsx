@@ -13,7 +13,7 @@ import { getAllSellers } from "../../redux/actions/sellers";
 const AdminDashboardMain = () => {
   const dispatch = useDispatch();
 
-  const { adminOrders,adminOrderLoading } = useSelector((state) => state.order);
+  const { adminOrders,adminOrderLoading } = useSelector((state) => state.orders);
   const { sellers } = useSelector((state) => state.seller);
 
   useEffect(() => {

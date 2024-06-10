@@ -9,7 +9,7 @@ const AdminDashboardOrders = () => {
   const dispatch = useDispatch();
 
   const { adminOrders, adminOrderLoading } = useSelector(
-    (state) => state.order
+    (state) => state.orders
   );
 
   useEffect(() => {

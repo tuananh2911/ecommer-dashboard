@@ -10,6 +10,7 @@ import Loader from "../Layout/Loader";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 
+const localhost = 'http://localhost:5000/api';
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -18,21 +19,20 @@ const AllCoupons = () => {
   const [minAmount, setMinAmout] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
-  const [value, setValue] = useState(null);
+  const [discountPercentage, setdiscountPercentage] = useState(null);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${server}/coupon/get-coupon/${seller._id}`, {
-        withCredentials: true,
+      .get(`${localhost}/coupons?vendorId=${seller.id}`, {
+        withCredentials: false,
       })
       .then((res) => {
         setIsLoading(false);
-        setCoupouns(res.data.couponCodes);
+        setCoupouns(res.data);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -48,19 +48,18 @@ const AllCoupons = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+      const payload = {
+          name,
+          minAmount: parseInt(minAmount, 10),  // Sử dụng parseInt với radix là 10 để chuyển đổi chuỗi thành số nguyên
+          maxAmount: parseInt(maxAmount, 10),
+          discountPercentage: parseInt(discountPercentage, 10),
+          productId: parseInt(selectedProducts),  // Đảm bảo đây là ID của sản phẩm, không phải tên
+          vendorId: 1,
+      };
     await axios
       .post(
-        `${server}/coupon/create-coupon-code`,
-        {
-          name,
-          minAmount,
-          maxAmount,
-          selectedProducts,
-          value,
-          shopId: seller._id,
-        },
-        { withCredentials: true }
+        `${localhost}/coupons`,
+          payload
       )
       .then((res) => {
        toast.success("Coupon code created successfully!");
@@ -106,13 +105,12 @@ const AllCoupons = () => {
   ];
 
   const row = [];
-
   coupouns &&
   coupouns.forEach((item) => {
       row.push({
-        id: item._id,
+        id: item.id,
         name: item.name,
-        price: item.value + " %",
+        price: item.discountPercentage + " %",
         sold: 10,
       });
     });
@@ -177,10 +175,10 @@ const AllCoupons = () => {
                     <input
                       type="text"
                       name="value"
-                      value={value}
+                      value={discountPercentage}
                       required
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      onChange={(e) => setValue(e.target.value)}
+                      onChange={(e) => setdiscountPercentage(e.target.value)}
                       placeholder="Enter your coupon code value..."
                     />
                   </div>
@@ -209,32 +207,31 @@ const AllCoupons = () => {
                     />
                   </div>
                   <br />
-                  <div>
-                    <label className="pb-2">Selected Product</label>
-                    <select
-                      className="w-full mt-2 border h-[35px] rounded-[5px]"
-                      value={selectedProducts}
-                      onChange={(e) => setSelectedProducts(e.target.value)}
-                    >
-                      <option value="Choose your selected products">
-                        Choose a selected product
-                      </option>
-                      {products &&
-                        products.map((i) => (
-                          <option value={i.name} key={i.name}>
-                            {i.name}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
-                  <br />
-                  <div>
-                    <input
-                      type="submit"
-                      value="Create"
-                      className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                  </div>
+                    <div>
+                        <label className="pb-2">Selected Product</label>
+                        <select
+                            className="w-full mt-2 border h-[35px] rounded-[5px]"
+                            value={selectedProducts}
+                            onChange={(e) => setSelectedProducts(e.target.value)} // Chuyển đổi giá trị đã chọn thành ID sản phẩm
+                        >
+                            <option value="">Choose a selected product</option>
+                            {products &&
+                                products.map((product) => (
+                                    <option value={product.id} key={product.id}>
+                                        {product.name}
+                                    </option>
+                                ))}
+                        </select>
+
+                    </div>
+                    <br/>
+                    <div>
+                        <input
+                            type="submit"
+                            value="Create"
+                            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        />
+                    </div>
                 </form>
               </div>
             </div>

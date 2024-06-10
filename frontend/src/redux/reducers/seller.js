@@ -12,6 +12,7 @@ export const sellerReducer = createReducer(initialState, {
     state.isSeller = true;
     state.isLoading = false;
     state.seller = action.payload;
+    sessionStorage.setItem('seller',JSON.stringify(action.payload));
   },
   LoadSellerFail: (state, action) => {
     state.isLoading = false;

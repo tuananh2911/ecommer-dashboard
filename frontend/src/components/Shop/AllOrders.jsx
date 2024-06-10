@@ -8,13 +8,13 @@ import { getAllOrdersOfShop } from "../../redux/actions/order";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 const AllOrders = () => {
-  const { orders, isLoading } = useSelector((state) => state.order);
+  const { orders, isLoading } = useSelector((state) => state.orders);
   const { seller } = useSelector((state) => state.seller);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllOrdersOfShop(seller._id));
+    dispatch(getAllOrdersOfShop(seller.id));
   }, [dispatch]);
 
   const columns = [
@@ -73,9 +73,9 @@ const AllOrders = () => {
   orders &&
     orders.forEach((item) => {
       row.push({
-        id: item._id,
-        itemsQty: item.cart.length,
-        total: "US$ " + item.totalPrice,
+        id: item.id,
+        itemsQty: item.quantity,
+        total: + item.totalPrice + "đ",
         status: item.status,
       });
     });

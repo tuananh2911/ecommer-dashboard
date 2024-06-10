@@ -1,6 +1,7 @@
 import axios from "axios";
 import { server } from "../../server";
 
+const localhost = 'http://localhost:5000/api';
 // get all orders of user
 export const getAllOrdersOfUser = (userId) => async (dispatch) => {
   try {
@@ -32,14 +33,15 @@ export const getAllOrdersOfShop = (shopId) => async (dispatch) => {
     });
 
     const { data } = await axios.get(
-      `${server}/order/get-seller-all-orders/${shopId}`
+      `${localhost}/orders?vendorId=${shopId}`
     );
-
+    console.log('data',data)
     dispatch({
       type: "getAllOrdersShopSuccess",
-      payload: data.orders,
+      payload: data,
     });
   } catch (error) {
+    console.log('error',  error)
     dispatch({
       type: "getAllOrdersShopFailed",
       payload: error.response.data.message,

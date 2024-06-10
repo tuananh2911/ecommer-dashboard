@@ -11,13 +11,13 @@ import { DataGrid } from "@material-ui/data-grid";
 
 const DashboardHero = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.order);
+  const { orders } = useSelector((state) => state.orders);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
-     dispatch(getAllOrdersOfShop(seller._id));
-     dispatch(getAllProductsShop(seller._id));
+     dispatch(getAllOrdersOfShop(seller.id));
+     dispatch(getAllProductsShop(seller.id));
   }, [dispatch]);
 
   const availableBalance = seller?.availableBalance.toFixed(2);
@@ -77,8 +77,8 @@ const DashboardHero = () => {
 
   orders && orders.forEach((item) => {
     row.push({
-        id: item._id,
-        itemsQty: item.cart.reduce((acc, item) => acc + item.qty, 0),
+        id: item.id,
+        itemsQty: item.quantity,
         total: "US$ " + item.totalPrice,
         status: item.status,
       });
