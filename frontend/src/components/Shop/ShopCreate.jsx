@@ -6,55 +6,64 @@ import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 import { RxAvatar } from "react-icons/rx";
-
+const localhost = "http://localhost:5000/api"
 const ShopCreate = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState();
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState();
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     axios
-      .post(`${server}/shop/create-shop`, {
-        name,
-        email,
-        password,
-        avatar,
-        zipCode,
-        address,
-        phoneNumber,
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setName("");
-        setEmail("");
-        setPassword("");
-        setAvatar();
-        setZipCode();
-        setAddress("");
-        setPhoneNumber();
-      })
-      .catch((error) => {
-        toast.error(error.response.data.message);
-      });
+        .post(`${localhost}/vendor`, {
+          name: String(name),
+          email: String(email),
+          password: String(password),
+          avatar: String(avatar),
+          address: String(address),
+          phone: String(phoneNumber),
+        })
+        .then((res) => {
+          toast.success("Success created");
+          navigate('/shop-login')
+          setName("");
+          setEmail("");
+          setPassword("");
+          setAvatar("");
+          setAddress("");
+          setPhoneNumber("");
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
   };
 
-  const handleFileInputChange = (e) => {
-    const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatar(reader.result);
-      }
-    };
+  const handleFileInputChange = async (e) => {
+    e.preventDefault();
 
-    reader.readAsDataURL(e.target.files[0]);
+    const formData = new FormData();
+    const images = Array.from(e.target.files);
+    images.forEach((image) => {
+      formData.append("files", image);
+    });
+    try {
+      const res = await axios.post(`${localhost}/upload/file`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const uploadedUrls = res.data.files.map(file => `https://drive.google.com/thumbnail?id=${file.id}`);
+      setAvatar(uploadedUrls);
+    } catch (error) {
+      toast.error("File upload failed");
+    }
   };
 
   return (
@@ -144,24 +153,6 @@ const ShopCreate = () => {
               </div>
             </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Zip Code
-              </label>
-              <div className="mt-1">
-                <input
-                  type="number"
-                  name="zipcode"
-                  required
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
 
             <div>
               <label
