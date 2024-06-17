@@ -7,7 +7,7 @@ import { getAllOrdersOfShop } from "../../redux/actions/order";
 import { server } from "../../server";
 import axios from "axios";
 import { toast } from "react-toastify";
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 
 const OrderDetails = () => {
     const { orders, isLoading } = useSelector((state) => state.orders);

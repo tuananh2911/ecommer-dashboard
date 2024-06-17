@@ -55,7 +55,7 @@ const CreateProduct = () => {
 
         try {
             // Upload files
-            const res = await axios.post("http://localhost:5000/api/upload/file", formData, {
+            const res = await axios.post("https://huycodelo.id.vn/api/upload/file", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

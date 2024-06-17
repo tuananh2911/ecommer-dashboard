@@ -10,7 +10,7 @@ import {loginSeller} from "../../redux/actions/login";
 import Store from "../../redux/store";
 import {getAllOrdersOfShop} from "../../redux/actions/order";
 
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 const ShopLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");

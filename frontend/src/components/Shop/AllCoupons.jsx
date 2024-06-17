@@ -10,7 +10,7 @@ import Loader from "../Layout/Loader";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");

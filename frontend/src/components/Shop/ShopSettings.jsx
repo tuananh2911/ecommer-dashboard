@@ -17,7 +17,7 @@ const ShopSettings = () => {
   const [zipCode, setZipcode] = useState(seller?.zipCode || '');
   const [email, setEmail] = useState(seller?.email || '');
   const dispatch = useDispatch();
-  const localhost = 'http://localhost:5000/api';
+  const localhost = 'https://huycodelo.id.vn/api';
   console.log('avatar',avatar)
   const handleImage = async (e) => {
     const file = e.target.files[0];

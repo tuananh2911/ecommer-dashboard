@@ -11,7 +11,7 @@ import { TfiGallery } from "react-icons/tfi";
 import styles from "../styles/styles";
 const ENDPOINT = "ws://localhost:4000";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 const UserInbox = () => {
   const { user,loading } = useSelector((state) => state.user);
   const [conversations, setConversations] = useState([]);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { server } from "../../server";
 
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 // get all sellers --- admin
 export const loginSeller = (dataUser) => async (dispatch) => {
     try {

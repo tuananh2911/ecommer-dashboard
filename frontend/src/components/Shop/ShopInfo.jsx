@@ -6,7 +6,7 @@ import styles from "../../styles/styles";
 import Loader from "../Layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductsShop } from "../../redux/actions/product";
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 const ShopInfo = ({ isOwner }) => {
   const [data,setData] = useState({});
   const {products} = useSelector((state) => state.products);

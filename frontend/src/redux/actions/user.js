@@ -1,6 +1,6 @@
 import axios from "axios";
 import { server } from "../../server";
-const localhost = 'http://localhost:5000/api';
+const localhost = 'https://huycodelo.id.vn/api';
 // load user
 export const loadUser = () => async (dispatch) => {
   try {
