@@ -6,7 +6,7 @@ import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
 import { RxAvatar } from "react-icons/rx";
-const localhost = "http://localhost:5000/api"
+const localhost = "https://huycodelo.id.vn/"
 const ShopCreate = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
